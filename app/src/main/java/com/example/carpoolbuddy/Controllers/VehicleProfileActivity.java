@@ -15,7 +15,9 @@ import com.example.carpoolbuddy.R;
 import com.example.carpoolbuddy.Utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 
@@ -89,16 +91,47 @@ public class VehicleProfileActivity extends AppCompatActivity {
         ArrayList<String> ridersUIDs = vehicle.getRidersUIDs();
         ridersUIDs.add(mUser.getEmail());
 
-        System.out.println(ridersUIDs);
-
         try {
-            firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).update(Constants.RIDER_FIELD, ridersUIDs);
+            firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).update(Constants.RIDERUID_PARAM, ridersUIDs);
+            decrementCapacity();
             Toast.makeText(this, "Booked Successfully", Toast.LENGTH_SHORT).show();
+            btnBook.setEnabled(false);
         }
         catch (Exception e) {
             Toast.makeText(this, "Error booking vehicle", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    public void decrementCapacity() {
+        firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).get()
+                .addOnCompleteListener(
+                (task) -> {
+                    if(task.getResult() == null) {
+                    }
+                    else if(task.isSuccessful()) {
+
+                        try {
+                            int capacity = task.getResult().get(Constants.CAPACITY_PARAM, Integer.class);
+                            capacity--;
+                            vehicle.setCapacity(capacity);
+                            txtCapacity.setText("Capacity: "+capacity);
+                            firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).update(Constants.CAPACITY_PARAM, capacity);
+
+                            if(capacity == 0) {
+                                firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).update(Constants.OPEN_PARAM, false);
+                            }
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    else{
+                        task.getException().printStackTrace();
+                        Toast.makeText(this, "Error booking vehicle", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void addCommonFields() {

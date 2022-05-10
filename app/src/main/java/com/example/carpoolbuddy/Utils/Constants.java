@@ -20,7 +20,9 @@ public class Constants {
     public static final String HELICOPTER = "Helicopter";
     public static final String SEGWAY = "Segway";
 
-    public static final String RIDER_FIELD = "ridersUIDs";
+    public static final String RIDERUID_PARAM = "ridersUIDs";
+    public static final String CAPACITY_PARAM = "capacity";
+    public static final String OPEN_PARAM = "open";
 
 
 }

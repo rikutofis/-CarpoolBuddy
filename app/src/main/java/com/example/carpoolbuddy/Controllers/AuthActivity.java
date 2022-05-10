@@ -154,28 +154,29 @@ public class AuthActivity extends AppCompatActivity {
         String name = txtName.getText().toString();
 
         User user = null;
+        ArrayList<String> ownedVehicles = new ArrayList<>();
 
         switch(selectedRole) {
             case "Student":
                 String graduatingYear = txtGraduatingYear.getText().toString();
-                user = new Student(email, name, email, selectedRole, 10, null, graduatingYear, null);
+                user = new Student(email, name, email, selectedRole, 10, ownedVehicles, graduatingYear, null);
                 break;
 
             case "Teacher":
                 String inSchoolTitle = txtInSchoolTitle.getText().toString();
-                user = new Teacher(email, name, email, selectedRole, 10, null, inSchoolTitle);
+                user = new Teacher(email, name, email, selectedRole, 10, ownedVehicles, inSchoolTitle);
                 break;
 
             case "Alumni":
                 String graduateYear = txtGraduateYear.getText().toString();
-                user = new Alumni(email, name, email, selectedRole, 10, null, graduateYear);
+                user = new Alumni(email, name, email, selectedRole, 10, ownedVehicles, graduateYear);
                 break;
 
             case "Parent":
                 ArrayList<String> childrenUIDs = new ArrayList<>();
                 String childrenUID = txtChildrenUIDs.getText().toString();
                 childrenUIDs.add(childrenUID);
-                user = new Parent(email, name, email, selectedRole, 10, null, childrenUIDs);
+                user = new Parent(email, name, email, selectedRole, 10, ownedVehicles, childrenUIDs);
                 break;
 
             default:
