@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -122,6 +123,7 @@ public class AuthActivity extends AppCompatActivity {
         linearLayout.addView(txtEmail);
 
         txtPassword = new EditText(this);
+        txtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtPassword.setHint("Password");
         linearLayout.addView(txtPassword);
     }
@@ -131,12 +133,17 @@ public class AuthActivity extends AppCompatActivity {
         String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
 
+        if(!email.endsWith("@fis.edu")) {
+            Toast.makeText(AuthActivity.this, "Only FIS community can sing up", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this,
                 (task) -> {
                     if(task.isSuccessful()){
                         Log.d(TAG, "Sign up: success");
-                        Toast.makeText(AuthActivity.this, "Success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AuthActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
                         mUser = mAuth.getCurrentUser();
                         addUser();

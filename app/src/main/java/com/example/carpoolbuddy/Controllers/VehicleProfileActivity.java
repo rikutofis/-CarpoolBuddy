@@ -1,23 +1,29 @@
 package com.example.carpoolbuddy.Controllers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.carpoolbuddy.Model.Vehicles.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.carpoolbuddy.Model.Vehicles.Bicycle;
+import com.example.carpoolbuddy.Model.Vehicles.Car;
+import com.example.carpoolbuddy.Model.Vehicles.Helicopter;
+import com.example.carpoolbuddy.Model.Vehicles.Segway;
+import com.example.carpoolbuddy.Model.Vehicles.Vehicle;
 import com.example.carpoolbuddy.R;
 import com.example.carpoolbuddy.Utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -41,6 +47,9 @@ public class VehicleProfileActivity extends AppCompatActivity {
     private TextView txtMaxAltitude;
     private TextView txtMaxAirSpeed;
 
+    private ImageView imageView;
+    private StorageReference storageRef;
+
     private Button btnBook;
 
     private Vehicle vehicle;
@@ -57,13 +66,25 @@ public class VehicleProfileActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         linearLayout = findViewById(R.id.VehicleProfile_linearLayout);
+        imageView = findViewById(R.id.VehicleProfile_imageView);
         btnBook = findViewById(R.id.VehicleProfile_btnBook);
 
         if(getIntent().hasExtra(Constants.VEHICLE_PATH)){
             vehicle = getIntent().getParcelableExtra(Constants.VEHICLE_PATH);
         }
 
+        if(vehicle.getImageID() != null) {
+            storageRef = FirebaseStorage.getInstance().getReference(Constants.IMAGE_PATH + vehicle.getImageID());
+            getImage(vehicle.getImageID());
+        }
+
         if(mUser.getEmail().equals(vehicle.getOwner()) || vehicle.getRidersUIDs().contains(mUser.getEmail())) {
+            if(mUser.getEmail().equals(vehicle.getOwner())) {
+                btnBook.setText("Owned");
+            }
+            else {
+                btnBook.setText("Booked");
+            }
             btnBook.setEnabled(false);
         }
 
@@ -96,12 +117,31 @@ public class VehicleProfileActivity extends AppCompatActivity {
             decrementCapacity();
             Toast.makeText(this, "Booked Successfully", Toast.LENGTH_SHORT).show();
             btnBook.setEnabled(false);
+            btnBook.setText("Booked");
         }
         catch (Exception e) {
             Toast.makeText(this, "Error booking vehicle", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
+
+    public void getImage(String image) {
+        System.out.println(Constants.IMAGE_PATH + image);
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+
+        storageRef.getBytes(ONE_MEGABYTE).addOnCompleteListener(
+            task -> {
+                if(task.isSuccessful()) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(task.getResult(), 0, task.getResult().length);
+                    imageView.setImageBitmap(bitmap);
+                }
+                else {
+                    task.getException();
+                }
+        });
+    }
+
 
     public void decrementCapacity() {
         firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).get()

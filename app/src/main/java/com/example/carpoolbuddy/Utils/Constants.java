@@ -24,5 +24,8 @@ public class Constants {
     public static final String CAPACITY_PARAM = "capacity";
     public static final String OPEN_PARAM = "open";
 
+    //image
+    public static final String IMAGE_PATH = "images/";
+
 
 }

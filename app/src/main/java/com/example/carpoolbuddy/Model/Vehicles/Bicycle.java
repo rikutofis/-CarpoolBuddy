@@ -14,8 +14,8 @@ public class Bicycle extends Vehicle {
         super();
     }
 
-    public Bicycle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, String bicycleType, int weight, int weightCapacity) {
-        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice);
+    public Bicycle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, String bicycleType, String imageID, int weight, int weightCapacity) {
+        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice, imageID);
         this.bicycleType = bicycleType;
         this.weight = weight;
         this.weightCapacity = weightCapacity;

@@ -6,49 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".Controllers.AddVehicleActivity">
 
-    <TextView
-        android:id="@+id/AddVehicle_txtAddVehicle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Vehicle"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-86dp"
+        tools:layout_editor_absoluteY="-245dp">
 
-    <Spinner
-        android:id="@+id/AddVehicle_vehicleTypeSpinner"
-        android:layout_width="189dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddVehicle_txtAddVehicle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/AddVehicle_linearLayout"
-        android:layout_width="290dp"
-        android:layout_height="292dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddVehicle_vehicleTypeSpinner"></LinearLayout>
+            <LinearLayout
+                android:id="@+id/AddVehicle_linearLayout"
+                android:layout_width="285dp"
+                android:layout_height="267dp"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddVehicle_vehicleTypeSpinner"></LinearLayout>
 
-    <Button
-        android:id="@+id/AddVehicle_btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="addNewVehicle"
-        android:text="Add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddVehicle_linearLayout" />
+            <Button
+                android:id="@+id/AddVehicle_btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp"
+                android:onClick="addNewVehicle"
+                android:text="Add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddVehicle_imageView" />
+
+            <ImageView
+                android:id="@+id/AddVehicle_imageView"
+                android:layout_width="203dp"
+                android:layout_height="212dp"
+                android:layout_marginTop="32dp"
+                android:onClick="selectImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddVehicle_txtAddimage"
+                app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+
+            <Spinner
+                android:id="@+id/AddVehicle_vehicleTypeSpinner"
+                android:layout_width="189dp"
+                android:layout_height="69dp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddVehicle_txtAddVehicle" />
+
+            <TextView
+                android:id="@+id/AddVehicle_txtAddimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Add Image: "
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/AddVehicle_linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/AddVehicle_linearLayout" />
+
+            <TextView
+                android:id="@+id/AddVehicle_txtAddVehicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Add Vehicle"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

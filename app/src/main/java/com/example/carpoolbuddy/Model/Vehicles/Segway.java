@@ -12,8 +12,8 @@ public class Segway extends Vehicle {
         super();
     }
 
-    public Segway(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, int range, int weightCapacity) {
-        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice);
+    public Segway(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, String imageID, int range, int weightCapacity) {
+        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice, imageID);
         this.range = range;
         this.weightCapacity = weightCapacity;
     }

@@ -1,13 +1,16 @@
 package com.example.carpoolbuddy.Controllers;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,8 +22,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AddVehicleActivity extends AppCompatActivity {
 
@@ -44,6 +50,11 @@ public class AddVehicleActivity extends AppCompatActivity {
     private EditText txtMaxAltitude;
     private EditText txtMaxAirSpeed;
 
+    private Vehicle vehicle;
+
+    private ImageView image;
+    private Uri imageUri;
+    private StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,9 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         sVehicleType = findViewById(R.id.AddVehicle_vehicleTypeSpinner);
         setUpSpinner();
+
+        image = findViewById(R.id.AddVehicle_imageView);
+        storageRef = FirebaseStorage.getInstance().getReference();
     }
 
     public void setUpSpinner() {
@@ -109,7 +123,7 @@ public class AddVehicleActivity extends AppCompatActivity {
                 linearLayout.addView(txtMaxAltitude);
 
                 txtMaxAirSpeed = new EditText(this);
-                txtMaxAirSpeed.setHint("Mac Air Speed");
+                txtMaxAirSpeed.setHint("Max Air Speed");
                 linearLayout.addView(txtMaxAirSpeed);
                 return;
             case Constants.SEGWAY:
@@ -272,7 +286,6 @@ public class AddVehicleActivity extends AppCompatActivity {
         int capacity = Integer.parseInt(txtCapacity.getText().toString());
         double basePrice = Double.parseDouble(txtBasePrice.getText().toString());
 
-        Vehicle vehicle = null;
         ArrayList<String> ridersUIDs = new ArrayList<>();
 
         switch(selectedType) {
@@ -280,24 +293,24 @@ public class AddVehicleActivity extends AppCompatActivity {
                 String bicycleType = txtBicycleType.getText().toString();
                 int weight = Integer.parseInt(txtWeight.getText().toString());
                 int weightCapacity = Integer.parseInt(txtWeightCapacity.getText().toString());
-                vehicle = new Bicycle(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, bicycleType, weight, weightCapacity);
+                vehicle = new Bicycle(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, null, bicycleType, weight, weightCapacity);
                 break;
             }
             case Constants.CAR: {
                 int range = Integer.parseInt(txtRange.getText().toString());
-                vehicle = new Car(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, range);
+                vehicle = new Car(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, null, range);
                 break;
             }
             case Constants.HELICOPTER: {
                 int maxAltitude = Integer.parseInt(txtMaxAltitude.getText().toString());
                 int maxAirSpeed = Integer.parseInt(txtMaxAirSpeed.getText().toString());
-                vehicle = new Helicopter(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, maxAltitude, maxAirSpeed);
+                vehicle = new Helicopter(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, null, maxAltitude, maxAirSpeed);
                 break;
             }
             case Constants.SEGWAY: {
                 int range = Integer.parseInt(txtRange.getText().toString());
                 int weightCapacity = Integer.parseInt(txtWeightCapacity.getText().toString());
-                vehicle = new Segway(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, range, weightCapacity);
+                vehicle = new Segway(owner, model, capacity, vehicleID, ridersUIDs, true, selectedType, basePrice, null, range, weightCapacity);
                 break;
             }
             default:
@@ -305,6 +318,10 @@ public class AddVehicleActivity extends AppCompatActivity {
         }
 
         try{
+            if(imageUri != null) {
+                addImage();
+            }
+
             newRideRef.set(vehicle);
             Toast.makeText(AddVehicleActivity.this, "Vehicle added successfully", Toast.LENGTH_SHORT).show();
         }
@@ -312,5 +329,39 @@ public class AddVehicleActivity extends AppCompatActivity {
             Toast.makeText(AddVehicleActivity.this, "Error adding vehicle", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    public void selectImage(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
+            imageUri = data.getData();
+            image.setImageURI(imageUri);
+        }
+    }
+
+    public void addImage() {
+        String imageID = UUID.randomUUID().toString();
+        StorageReference imageRef = storageRef.child(Constants.IMAGE_PATH + imageID);
+        vehicle.setImageID(imageID);
+
+        imageRef.putFile(imageUri).addOnCompleteListener(
+            (task) -> {
+                if(task.isSuccessful()) {
+                    Toast.makeText(AddVehicleActivity.this, "Image Added Successfully", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(AddVehicleActivity.this, "Error adding images", Toast.LENGTH_SHORT).show();
+                }
+
+        });
     }
 }

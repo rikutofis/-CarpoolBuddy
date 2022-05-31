@@ -16,9 +16,11 @@ public class Vehicle implements Serializable, Parcelable {
     private String vehicleType;
     private double basePrice;
 
+    private String imageID;
+
     public Vehicle(){}
 
-    public Vehicle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice) {
+    public Vehicle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, String imageID) {
         this.owner = owner;
         this.model = model;
         this.capacity = capacity;
@@ -27,6 +29,7 @@ public class Vehicle implements Serializable, Parcelable {
         this.open = open;
         this.vehicleType = vehicleType;
         this.basePrice = basePrice;
+        this.imageID = imageID;
     }
 
     protected Vehicle(Parcel in) {
@@ -38,6 +41,7 @@ public class Vehicle implements Serializable, Parcelable {
         open = in.readByte() != 0;
         vehicleType = in.readString();
         basePrice = in.readDouble();
+        imageID = in.readString();
     }
 
     public static final Creator<Vehicle> CREATOR = new Creator<Vehicle>() {
@@ -120,6 +124,14 @@ public class Vehicle implements Serializable, Parcelable {
         this.basePrice = basePrice;
     }
 
+    public String getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(String imageID) {
+        this.imageID = imageID;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -149,5 +161,6 @@ public class Vehicle implements Serializable, Parcelable {
         dest.writeByte((byte) (open ? 1 : 0));
         dest.writeString(vehicleType);
         dest.writeDouble(basePrice);
+        dest.writeString(imageID);
     }
 }

@@ -11,8 +11,8 @@ public class Car extends Vehicle {
         super();
     }
 
-    public Car(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, int range) {
-        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice);
+    public Car(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice, String imageID, int range) {
+        super(owner, model, capacity, vehicleID, ridersUIDs, open, vehicleType, basePrice, imageID);
         this.range = range;
     }
 

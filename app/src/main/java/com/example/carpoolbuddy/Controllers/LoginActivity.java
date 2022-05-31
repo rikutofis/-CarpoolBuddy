@@ -40,9 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
         txtEmail = (EditText) findViewById(R.id.Login_txtEmail);
         txtPassword = (EditText) findViewById(R.id.Login_txtPassword);
-
-        System.out.println("Hello");
-        Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show();
     }
 
     private boolean formValid() {
