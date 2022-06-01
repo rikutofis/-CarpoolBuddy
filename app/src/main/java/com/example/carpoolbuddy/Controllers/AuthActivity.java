@@ -152,13 +152,12 @@ public class AuthActivity extends AppCompatActivity {
      * @param view invoked when clicking signup button
      */
     public void signUp(View view){
-        String email = txtEmail.getText().toString();
-        String password = txtPassword.getText().toString();
-
-        if(!email.endsWith("@fis.edu")) {
-            Toast.makeText(AuthActivity.this, "Only FIS community can sing up", Toast.LENGTH_SHORT).show();
+        if(!formValid()) {
             return;
         }
+
+        String email = txtEmail.getText().toString();
+        String password = txtPassword.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this,
@@ -189,22 +188,22 @@ public class AuthActivity extends AppCompatActivity {
         ArrayList<String> ownedVehicles = new ArrayList<>();
 
         switch(selectedRole) {
-            case "Student":
+            case Constants.STUDENT:
                 String graduatingYear = txtGraduatingYear.getText().toString();
                 user = new Student(email, name, email, selectedRole, 10, ownedVehicles, graduatingYear, null);
                 break;
 
-            case "Teacher":
+            case Constants.TEACHER:
                 String inSchoolTitle = txtInSchoolTitle.getText().toString();
                 user = new Teacher(email, name, email, selectedRole, 10, ownedVehicles, inSchoolTitle);
                 break;
 
-            case "Alumni":
+            case Constants.ALUMNI:
                 String graduateYear = txtGraduateYear.getText().toString();
                 user = new Alumni(email, name, email, selectedRole, 10, ownedVehicles, graduateYear);
                 break;
 
-            case "Parent":
+            case Constants.PARENT:
                 ArrayList<String> childrenUIDs = new ArrayList<>();
                 String childrenUID = txtChildrenUIDs.getText().toString();
                 childrenUIDs.add(childrenUID);
@@ -229,5 +228,59 @@ public class AuthActivity extends AppCompatActivity {
      */
     public void goToUserProfileActivity() {
         startActivity(new Intent(this, UserProfileActivity.class));
+    }
+
+    /**
+     * checks if the input form is valid
+     * @return true if valid
+     */
+    public boolean formValid() {
+        if(txtName.getText().toString().equals("")) {
+            Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(txtEmail.getText().toString().equals("")) {
+            Toast.makeText(this, "Email is empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!txtEmail.getText().toString().endsWith("@fis.edu")) {
+            Toast.makeText(AuthActivity.this, "Only FIS community can sing up", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(txtPassword.getText().toString().equals("")) {
+            Toast.makeText(this, "Password is empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        switch(selectedRole) {
+            case Constants.STUDENT:
+                if(txtGraduatingYear.getText().toString().equals("")) {
+                    Toast.makeText(this, "Graduating Year is empty", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+            case Constants.TEACHER:
+                if(txtInSchoolTitle.getText().toString().equals("")) {
+                    Toast.makeText(this, "In School Title is empty", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+            case Constants.ALUMNI:
+                if(txtGraduateYear.getText().toString().equals("")) {
+                    Toast.makeText(this, "Graduate Year is empty", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+            case Constants.PARENT:
+                if(txtChildrenUIDs.getText().toString().equals("")) {
+                    Toast.makeText(this, "Children UID is empty", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+        }
+
+        return true;
     }
 }
