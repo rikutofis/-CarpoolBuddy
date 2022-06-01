@@ -10,6 +10,12 @@ import com.example.carpoolbuddy.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Allows user to navigate through different functions
+ * See Vehicles, Add Vehicles, Logout
+ * @author Rikuto
+ * @version 0.1
+ */
 public class UserProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -25,6 +31,10 @@ public class UserProfileActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
     }
 
+    /**
+     * logout
+     * @param view invoked when logout button clicked
+     */
     public void logOut(View view) {
         mAuth.signOut();
 
@@ -32,10 +42,18 @@ public class UserProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * takes the user to AddVehicleActivity page
+     * @param view invoked when add vehicle button clicked
+     */
     public void addVehicles(View view) {
         startActivity(new Intent(this, AddVehicleActivity.class));
     }
 
+    /**
+     * takes the user to VehiclesInfoActivity
+     * @param view invoked when see vehicle button clicked
+     */
     public void seeVehicles(View view) {
         startActivity(new Intent(this, VehiclesInfoActivity.class));
     }

@@ -4,6 +4,11 @@ import android.os.Parcel;
 
 import java.util.ArrayList;
 
+/**
+ * Child of Vehicle
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Helicopter extends Vehicle {
     private int maxAltitude;
     private int maxAirSpeed;
@@ -36,22 +41,37 @@ public class Helicopter extends Vehicle {
         }
     };
 
+    /**
+     * @return max altitude
+     */
     public int getMaxAltitude() {
         return maxAltitude;
     }
 
+    /**
+     * @param maxAltitude sets max altitude to parameter
+     */
     public void setMaxAltitude(int maxAltitude) {
         this.maxAltitude = maxAltitude;
     }
 
+    /**
+     * @return max air speed
+     */
     public int getMaxAirSpeed() {
         return maxAirSpeed;
     }
 
+    /**
+     * @param maxAirSpeed sets max air speed to parameter
+     */
     public void setMaxAirSpeed(int maxAirSpeed) {
         this.maxAirSpeed = maxAirSpeed;
     }
 
+    /**
+     * @return string of all the information in the object
+     */
     @Override
     public String toString() {
         return "Helicopter{" +
@@ -68,6 +88,11 @@ public class Helicopter extends Vehicle {
                 '}';
     }
 
+    /**
+     * writes to parcel
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);

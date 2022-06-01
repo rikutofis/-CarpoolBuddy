@@ -20,6 +20,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.SQLOutput;
 
+/**
+ * Allows user login or takes user to a sign up page
+ * @author Rikuto
+ * @version 0.1
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
@@ -42,6 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         txtPassword = (EditText) findViewById(R.id.Login_txtPassword);
     }
 
+    /**
+     * Checks if each form is valid
+     * whether the input is empty or not
+     * @return true if the form is valid
+     */
     private boolean formValid() {
         if(txtEmail.getText().toString().equals("")) {
             Toast.makeText(LoginActivity.this, "Email is empty", Toast.LENGTH_SHORT).show();
@@ -56,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Log in function
+     * Checks if username and password is correct in the firebase
+     * Sends user to UserProfileActivity page if success
+     * @param view invoked when clicking login button
+     */
     public void logIn(View view){
         if(!formValid()) {
             return;
@@ -81,11 +97,17 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-
+    /**
+     * takes the user to signup page
+     * @param view invoked when clicking signup button
+     */
     public void signUp(View view) {
         startActivity(new Intent(this, AuthActivity.class));
     }
 
+    /**
+     * takes the user to UserProfileActivity
+     */
     public void goToUserProfileActivity(){
         startActivity(new Intent(this, UserProfileActivity.class));
     }

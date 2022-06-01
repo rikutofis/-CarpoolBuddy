@@ -23,6 +23,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Allows user to create new account
+ * @author Rikuto
+ * @version 0.1
+ */
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
@@ -60,6 +65,11 @@ public class AuthActivity extends AppCompatActivity {
         setUpSpinner();
     }
 
+    /**
+     * adds all the possible users type to the spinner
+     * changes the textfields depending on the selected user type
+     * Student, Teacher, Parent, Alumni
+     */
     public void setUpSpinner() {
         String[] userTypes = {Constants.STUDENT, Constants.TEACHER, Constants.PARENT, Constants.ALUMNI};
 
@@ -81,6 +91,9 @@ public class AuthActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * adds all the necessary fields for selected user type
+     */
     public void addFields() {
         addCommonFields();
 
@@ -110,6 +123,10 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * adds common fields
+     * Name, Email, Password
+     */
     public void addCommonFields() {
         linearLayout.removeAllViewsInLayout();
 
@@ -128,7 +145,12 @@ public class AuthActivity extends AppCompatActivity {
         linearLayout.addView(txtPassword);
     }
 
-
+    /**
+     * signup function
+     * authenticates email and password in firebase
+     * tkaes the user to UserProfileActivity if success
+     * @param view invoked when clicking signup button
+     */
     public void signUp(View view){
         String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
@@ -156,6 +178,9 @@ public class AuthActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * adds user to firebase
+     */
     public void addUser() {
         String email = mUser.getEmail();
         String name = txtName.getText().toString();
@@ -199,6 +224,9 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * takes the user to UserProfileActivity page
+     */
     public void goToUserProfileActivity() {
         startActivity(new Intent(this, UserProfileActivity.class));
     }

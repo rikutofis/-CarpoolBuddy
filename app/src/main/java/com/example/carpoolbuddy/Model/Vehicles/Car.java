@@ -4,6 +4,11 @@ import android.os.Parcel;
 
 import java.util.ArrayList;
 
+/**
+ * Child of Vehicle
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Car extends Vehicle {
     private int range;
 
@@ -33,14 +38,23 @@ public class Car extends Vehicle {
         }
     };
 
+    /**
+     * @return range
+     */
     public int getRange() {
         return range;
     }
 
+    /**
+     * @param range sets range to parameter
+     */
     public void setRange(int range) {
         this.range = range;
     }
 
+    /**
+     * @return string of all information in the object
+     */
     @Override
     public String toString() {
         return "Car{" +
@@ -56,6 +70,11 @@ public class Car extends Vehicle {
                 '}';
     }
 
+    /**
+     * writes to parcel
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);

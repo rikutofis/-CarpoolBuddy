@@ -5,6 +5,11 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+/**
+ * Child of Vehicle
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Bicycle extends Vehicle {
     private String bicycleType;
     private int weight;
@@ -40,30 +45,51 @@ public class Bicycle extends Vehicle {
         }
     };
 
+    /**
+     * @return bicycle type
+     */
     public String getBicycleType() {
         return bicycleType;
     }
 
+    /**
+     * @param bicycleType sets bicycle type to parameter
+     */
     public void setBicycleType(String bicycleType) {
         this.bicycleType = bicycleType;
     }
 
+    /**
+     * @return weight
+     */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * @param weight sets weight to parameter
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
+    /**
+     * @return weight capacity
+     */
     public int getWeightCapacity() {
         return weightCapacity;
     }
 
+    /**
+     * @param weightCapacity sets weigth capacity to parameter
+     */
     public void setWeightCapacity(int weightCapacity) {
         this.weightCapacity = weightCapacity;
     }
 
+    /**
+     * @return string of all the information of the object
+     */
     @Override
     public String toString() {
         return "Bicycle{" +
@@ -81,6 +107,11 @@ public class Bicycle extends Vehicle {
                 '}';
     }
 
+    /**
+     * writes to parcel
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);

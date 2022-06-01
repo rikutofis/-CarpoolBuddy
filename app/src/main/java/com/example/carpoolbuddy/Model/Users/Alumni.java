@@ -2,6 +2,11 @@ package com.example.carpoolbuddy.Model.Users;
 
 import java.util.ArrayList;
 
+/**
+ * Child of User
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Alumni extends User {
     private String graduateYear;
 
@@ -14,14 +19,23 @@ public class Alumni extends User {
         this.graduateYear = graduateYear;
     }
 
+    /**
+     * @return graduate year
+     */
     public String getGraduateYear() {
         return graduateYear;
     }
 
+    /**
+     * @param graduateYear sets graduate year to parameter
+     */
     public void setGraduateYear(String graduateYear) {
         this.graduateYear = graduateYear;
     }
 
+    /**
+     * @return string of all the information in the object
+     */
     @Override
     public String toString() {
         return "Alumni{" +

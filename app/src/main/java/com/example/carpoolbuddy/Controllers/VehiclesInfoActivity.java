@@ -1,6 +1,5 @@
 package com.example.carpoolbuddy.Controllers;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,22 +11,23 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carpoolbuddy.Controllers.RecView.Rec_Adapter;
-import com.example.carpoolbuddy.Model.Vehicles.*;
 import com.example.carpoolbuddy.Model.Vehicles.Vehicle;
 import com.example.carpoolbuddy.R;
 import com.example.carpoolbuddy.Utils.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class VehiclesInfoActivity extends AppCompatActivity implements Rec_Adapter.OnViewClickListner{
+/**
+ * Displayes all the vehicles in the recycler view
+ * @author Rikuto
+ * @version 0.1
+ */
+public class VehiclesInfoActivity extends AppCompatActivity implements Rec_Adapter.OnViewClickListener {
 
     private static final String TAG = "VehiclesInfoActivity";
 
@@ -56,6 +56,9 @@ public class VehiclesInfoActivity extends AppCompatActivity implements Rec_Adapt
         getVehiclesFromDB();
     }
 
+    /**
+     * gets all the vehicles from the firebase
+     */
     public void getVehiclesFromDB() {
         TaskCompletionSource<String> getAllRidesTask = new TaskCompletionSource<>();
 
@@ -84,7 +87,11 @@ public class VehiclesInfoActivity extends AppCompatActivity implements Rec_Adapt
         });
     }
 
-
+    /**
+     * gets more specific data about the vehicle from the firebase
+     * sends the user to VehicleProfileActivity
+     * @param position
+     */
     @Override
     public void onViewClick(int position) {
         TaskCompletionSource<String> getAllRidesTask = new TaskCompletionSource<>();

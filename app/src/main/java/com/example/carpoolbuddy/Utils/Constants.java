@@ -1,5 +1,10 @@
 package com.example.carpoolbuddy.Utils;
 
+/**
+ * stores all the constants for Users, Vehicle and images
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Constants {
     //Users
     public static final String USER_PATH = "User";

@@ -6,6 +6,11 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Parent of all vehicles
+ * @author Rikuto
+ * @version 0.1
+ */
 public class Vehicle implements Serializable, Parcelable {
     private String owner;
     private String model;
@@ -56,82 +61,142 @@ public class Vehicle implements Serializable, Parcelable {
         }
     };
 
+    /**
+     * @return owner
+     */
     public String getOwner() {
         return owner;
     }
 
+    /**
+     * @param owner sets owner to parameter
+     */
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
+    /**
+     * @return model
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * @param model sets model to parameter
+     */
     public void setModel(String model) {
         this.model = model;
     }
 
+    /**
+     * @return capacity
+     */
     public int getCapacity() {
         return capacity;
     }
 
+    /**
+     * @param capacity sets capacity to parameter
+     */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
+    /**
+     * @return vehicleID
+     */
     public String getVehicleID() {
         return vehicleID;
     }
 
+    /**
+     * @param vehicleID sets vehicleID to parameter
+     */
     public void setVehicleID(String vehicleID) {
         this.vehicleID = vehicleID;
     }
 
+    /**
+     * @return riderUIDs
+     */
     public ArrayList<String> getRidersUIDs() {
         return ridersUIDs;
     }
 
+    /**
+     * @param riderUID adds parameter to riderUIDs
+     */
     public void addRidersUID(String riderUID) {
         ridersUIDs.add(riderUID);
     }
 
+    /**
+     * @param ridersUIDs sets riderUIDs to parameter
+     */
     public void setRidersUIDs(ArrayList<String> ridersUIDs) {
         this.ridersUIDs = ridersUIDs;
     }
 
+    /**
+     * @return open
+     */
     public boolean isOpen() {
         return open;
     }
 
+    /**
+     * @param open sets open to parameter
+     */
     public void setOpen(boolean open) {
         this.open = open;
     }
 
+    /**
+     * @return vehicle type
+     */
     public String getVehicleType() {
         return vehicleType;
     }
 
+    /**
+     * @param vehicleType sets vehicle type to parameter
+     */
     public void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
 
+    /**
+     * @return base price
+     */
     public double getBasePrice() {
         return basePrice;
     }
 
+    /**
+     * @param basePrice sets base price to parameter
+     */
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
     }
 
+    /**
+     * @return imageID
+     */
     public String getImageID() {
         return imageID;
     }
 
+    /**
+     * @param imageID sets imageID to parameter
+     */
     public void setImageID(String imageID) {
         this.imageID = imageID;
     }
 
+    /**
+     * @return string of all information in the object
+     */
     @Override
     public String toString() {
         return "Vehicle{" +

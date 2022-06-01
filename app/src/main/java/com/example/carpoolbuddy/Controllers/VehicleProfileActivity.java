@@ -27,6 +27,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/**
+ * Allows user to view specific information of a selected vehicle
+ * @author Rikuto
+ * @version 0.1
+ */
 public class VehicleProfileActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
@@ -108,6 +113,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * allows user to book a vehicle and records it on firebase
+     * @param view invoked when book button clicked
+     */
     public void book(View view) {
         ArrayList<String> ridersUIDs = vehicle.getRidersUIDs();
         ridersUIDs.add(mUser.getEmail());
@@ -125,6 +134,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * gets image of the vehicle from the firebase storage
+     * @param image image path in storage
+     */
     public void getImage(String image) {
         System.out.println(Constants.IMAGE_PATH + image);
 
@@ -142,7 +155,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * decrements the capacity of the vehicle when booking
+     * closes the vehicle when capacity is 0
+     */
     public void decrementCapacity() {
         firestore.collection(Constants.VEHICLE_PATH).document(vehicle.getVehicleID()).get()
                 .addOnCompleteListener(
@@ -174,6 +190,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * adds common text fields
+     * Vehicle Type, Model, Capacity, Base Price
+     */
     public void addCommonFields() {
         txtVehicleType = new TextView(this);
         txtVehicleType.setTextSize(textSize);
@@ -196,6 +216,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         linearLayout.addView(txtBasePrice);
     }
 
+    /**
+     * adds all the textfields necessary for bicycle
+     * @param bicycle the selected bicycle
+     */
     public void addBicycle(Bicycle bicycle) {
         txtBicycleType = new TextView(this);
         txtBicycleType.setTextSize(textSize);
@@ -213,6 +237,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         linearLayout.addView(txtWeightCapacity);
     }
 
+    /**
+     * adds all the textfields necessary for car
+     * @param car selected car
+     */
     public void addCar(Car car) {
         txtRange = new TextView(this);
         txtRange.setTextSize(textSize);
@@ -220,6 +248,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         linearLayout.addView(txtRange);
     }
 
+    /**
+     * adds all the textfields necessary for helicopter
+     * @param helicopter selected helicopter
+     */
     public void addHelicopter(Helicopter helicopter) {
         txtMaxAltitude = new TextView(this);
         txtMaxAltitude.setTextSize(textSize);
@@ -232,6 +264,10 @@ public class VehicleProfileActivity extends AppCompatActivity {
         linearLayout.addView(txtMaxAirSpeed);
     }
 
+    /**
+     * adds all the textfields necessary for segway
+     * @param segway the selected segway
+     */
     public void addSegway(Segway segway) {
         txtRange = new TextView(this);
         txtRange.setTextSize(textSize);

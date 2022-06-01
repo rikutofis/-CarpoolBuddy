@@ -28,6 +28,11 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Allows user to add vehicles to the firebase
+ * @author Rikuto
+ * @version 0.1
+ */
 public class AddVehicleActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestoreRef;
@@ -74,6 +79,11 @@ public class AddVehicleActivity extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference();
     }
 
+    /**
+     * adds all the possile vehicle type to the spinner
+     * Bicycle, Car, Helicopter, Segway
+     * adds all the necessary fields for selected vehicle type
+     */
     public void setUpSpinner() {
         String[] userTypes = {Constants.BICYCLE, Constants.CAR, Constants.HELICOPTER, Constants.SEGWAY};
 
@@ -95,6 +105,9 @@ public class AddVehicleActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * text fields are added depending on the slected vehicle type
+     */
     public void addFields() {
         addCommonFields();
 
@@ -140,6 +153,10 @@ public class AddVehicleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * common fields are added
+     * Model, Capacity, Base Price
+     */
     public void addCommonFields() {
         linearLayout.removeAllViewsInLayout();
 
@@ -157,6 +174,12 @@ public class AddVehicleActivity extends AppCompatActivity {
         linearLayout.addView(txtBasePrice);
     }
 
+    /**
+     * checks if the form is valid
+     * whether the input is empty or not
+     * whether the input is numeric/positive integer or not
+     * @return true if valid
+     */
     public boolean formValid() {
         if(txtModel.getText().toString().equals("")) {
             Toast.makeText(AddVehicleActivity.this, "Model is empty", Toast.LENGTH_SHORT).show();
@@ -264,14 +287,28 @@ public class AddVehicleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * checks if a given string is a positive number
+     * @param s input string
+     * @return true if positive number
+     */
     private boolean isPositiveNumeric(String s) {
         return s.matches("\\d+(.\\d+)?");
     }
 
+    /**
+     * checks if a given string is a positive integer or not
+     * @param s input string
+     * @return true if positive int
+     */
     private boolean isPositiveInt(String s) {
         return s.matches("\\d+");
     }
 
+    /**
+     * adds new vehicle to the firebase
+     * @param view invoked when clicking add button
+     */
     public void addNewVehicle(View view) {
         if(!formValid()) {
             return;
@@ -331,6 +368,10 @@ public class AddVehicleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * user can select images from their gallery
+     * @param view invoked when image icon is clicked
+     */
     public void selectImage(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -338,6 +379,12 @@ public class AddVehicleActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    /**
+     * stores the imageUri when image selected
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -348,6 +395,9 @@ public class AddVehicleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * adds image to the firebase storage
+     */
     public void addImage() {
         String imageID = UUID.randomUUID().toString();
         StorageReference imageRef = storageRef.child(Constants.IMAGE_PATH + imageID);
